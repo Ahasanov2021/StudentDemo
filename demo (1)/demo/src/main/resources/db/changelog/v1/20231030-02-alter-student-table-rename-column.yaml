@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20231030-02
+      author: AHasanov
+      changes:
+        - renameColumn:
+            tableName: student
+            oldColumnName: sur_name
+            newColumnName: lastname
