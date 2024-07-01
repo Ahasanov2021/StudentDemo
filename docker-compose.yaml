@@ -10,20 +10,22 @@ services:
       - db_data:/var/lib/postgresql
     environment:
       POSTGRES_PASSWORD: mysecretpassword
-#    networks:
-#      - demo-ms19-network
-#  ms19:
-#    container_name: ms19-app
-#    image: alihasanov/ms19:v6
-#    networks:
-#      - demo-ms19-network
-#    ports:
-#      - "8081:8081"
-#    depends_on:
-#      - pg
+    networks:
+      - demo-app-network
+  app:
+    container_name: demo-app
+#    image: app:v5
+    build:
+      dockerfile: Dockerfile
+    networks:
+      - demo-app-network
+    ports:
+      - "8087:8087"
+    depends_on:
+      - pg
 
 
 volumes:
   db_data: {}
-#networks:
-#  demo-ms19-network:
+networks:
+  demo-app-network:
