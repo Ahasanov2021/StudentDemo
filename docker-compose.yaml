@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+  pg:
+    container_name: ms19-postgres-db
+    image: postgres
+    ports:
+      - "5888:5432"
+    volumes:
+      - db_data:/var/lib/postgresql
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+#    networks:
+#      - demo-ms19-network
+#  ms19:
+#    container_name: ms19-app
+#    image: alihasanov/ms19:v6
+#    networks:
+#      - demo-ms19-network
+#    ports:
+#      - "8081:8081"
+#    depends_on:
+#      - pg
+
+
+volumes:
+  db_data: {}
+#networks:
+#  demo-ms19-network:
