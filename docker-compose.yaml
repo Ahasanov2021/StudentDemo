@@ -1,29 +1,29 @@
 version: '3.3'
 
 services:
-  pg:
-    container_name: ms19-postgres-db
-    image: postgres
-    ports:
-      - "5888:5432"
-    volumes:
-      - db_data:/var/lib/postgresql
+  mysql-db:
+    image: mysql
+    container_name: demo-mysql
     environment:
-      POSTGRES_PASSWORD: mysecretpassword
-#    networks:
-#      - demo-ms19-network
-#  ms19:
-#    container_name: ms19-app
-#    image: alihasanov/ms19:v6
-#    networks:
-#      - demo-ms19-network
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: inventory
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "5678:3306"
+
+#services:
+#  pg:
+#    container_name: demo-mysql
+#    image: mysql
 #    ports:
-#      - "8081:8081"
-#    depends_on:
-#      - pg
+#      - "5678:5432"
+#    volumes:
+#      - db_data:/var/lib/mysql
+#    environment:
+#      MYSQL_ROOT_PASSWORD: mysecretpassword
+
 
 
 volumes:
   db_data: {}
-#networks:
-#  demo-ms19-network:
