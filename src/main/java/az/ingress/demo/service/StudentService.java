@@ -1,9 +1,10 @@
 package az.ingress.demo.service;
 
+import az.ingress.demo.dto.StudentDto;
 import az.ingress.demo.model.Student;
 
 public interface StudentService {
-    Student get(Integer id);
+    StudentDto get(Integer id);
 
     Student create(Student student);
 

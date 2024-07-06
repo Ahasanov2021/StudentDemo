@@ -1,1 +1,0 @@
-insert into student (name, lastname, age, phone) values ('Namiq', 'Mammadov', 23, '123456')

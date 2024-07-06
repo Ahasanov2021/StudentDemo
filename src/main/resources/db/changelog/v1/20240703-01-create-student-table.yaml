@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 20231030-01
+      id: 20240703-01
       author: AHasanov
       changes:
         - createTable:
@@ -24,5 +24,8 @@ databaseChangeLog:
               - column:
                   name: phone
                   type: VARCHAR(255)
+              - column:
+                  name: balance
+                  type: DOUBLE
             tableName: student
 

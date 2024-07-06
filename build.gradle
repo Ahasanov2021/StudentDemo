@@ -23,16 +23,18 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation group: 'org.mapstruct', name: 'mapstruct', version: "1.4.2.Final"
+//	implementation group: 'org.mapstruct', name: 'mapstruct', version: "1.4.2.Final"
+	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
-	annotationProcessor group: 'org.mapstruct', name: 'mapstruct', version: "1.4.2.Final"
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+//	annotationProcessor group: 'org.mapstruct', name: 'mapstruct', version: "1.4.2.Final"
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 //    runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'org.postgresql:postgresql'
-//	implementation("org.liquibase:liquibase-core:4.22.0") {
-//		exclude group: 'ch.qos.logback'
-//	}
+	implementation("org.liquibase:liquibase-core:4.22.0") {
+		exclude group: 'ch.qos.logback'
+	}
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

@@ -12,17 +12,17 @@ services:
       POSTGRES_PASSWORD: mysecretpassword
     networks:
       - demo-app-network
-  app:
-    container_name: demo-app
-#    image: app:v5
-    build:
-      dockerfile: Dockerfile
-    networks:
-      - demo-app-network
-    ports:
-      - "8087:8087"
-    depends_on:
-      - pg
+#  app:
+#    container_name: demo-app
+##    image: app:v5
+#    build:
+#      dockerfile: Dockerfile
+#    networks:
+#      - demo-app-network
+#    ports:
+#      - "8087:8087"
+#    depends_on:
+#      - pg
 
 
 volumes:

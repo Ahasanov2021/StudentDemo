@@ -1,6 +1,8 @@
 package az.ingress.demo.service;
 
 import az.ingress.demo.config.Config;
+import az.ingress.demo.dto.StudentDto;
+import az.ingress.demo.mapper.StudentMapper;
 import az.ingress.demo.model.Student;
 import az.ingress.demo.repository.StudentRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -17,24 +19,23 @@ public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
     private final Config config;
+    private final StudentMapper studentMapper;
 
-    public StudentServiceImpl(StudentRepository studentRepository, Config config) {
+    public StudentServiceImpl(StudentRepository studentRepository, Config config, StudentMapper studentMapper) {
         this.studentRepository = studentRepository;
         this.config = config;
+        this.studentMapper = studentMapper;
     }
 
     @Value("${student.balance}")
     private Integer balance;
 
     @Override
-    public Student get(Integer id){
+    public StudentDto get(Integer id){
         System.out.println(config.getList());
         log.info("Student service get method is working.");
-        Optional<Student> student = studentRepository.findById(id);
-        if(student.isEmpty()){
-            throw new RuntimeException("Student not found");
-        }
-        return student.get();
+        Student student = studentRepository.findById(id).orElseThrow(()-> new RuntimeException("Student not found"));
+        return studentMapper.entityToDto(student);
     }
 
     @Override
@@ -56,11 +57,14 @@ public class StudentServiceImpl implements StudentService {
         if(student.getName() != null){
             entity.setName(student.getName());
         }
-        if(student.getSurName() != null){
-            entity.setSurName(student.getSurName());
+        if(student.getLastname() != null){
+            entity.setLastname(student.getLastname());
         }
         if(student.getPhone() != null){
             entity.setPhone(student.getPhone());
+        }
+        if(student.getBalance() != null){
+            entity.setBalance(student.getBalance());
         }
         studentRepository.save(entity);
         return entity;

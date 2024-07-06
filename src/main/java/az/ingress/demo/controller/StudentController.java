@@ -1,5 +1,6 @@
 package az.ingress.demo.controller;
 
+import az.ingress.demo.dto.StudentDto;
 import az.ingress.demo.model.Student;
 import az.ingress.demo.service.StudentService;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,7 +25,7 @@ public class StudentController {
 //    }
 
     @GetMapping("/{id}")
-    public Student get(@PathVariable Integer id){
+    public StudentDto get(@PathVariable Integer id){
         return studentService.get(id);
     }
 
