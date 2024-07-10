@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20240709-01
+      author: AHasanov
+      changes:
+        - sqlFile:
+            path: db/changelog/sql/a.sql
+

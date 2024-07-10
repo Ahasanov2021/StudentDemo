@@ -7,7 +7,7 @@ services:
     ports:
       - "5888:5432"
     volumes:
-      - db_data:/var/lib/postgresql
+      - db_data:/var/lib/postg`resql
     environment:
       POSTGRES_PASSWORD: mysecretpassword
     networks:

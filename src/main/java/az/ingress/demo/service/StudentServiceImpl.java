@@ -27,8 +27,6 @@ public class StudentServiceImpl implements StudentService {
         this.studentMapper = studentMapper;
     }
 
-    @Value("${student.balance}")
-    private Integer balance;
 
     @Override
     public StudentDto get(Integer id){
@@ -41,7 +39,6 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student create(Student student){
         log.info("Student service create method is working.");
-//        student.setBalance(balance);
         Student studentInDb = studentRepository.save(student);
         return studentInDb;
     }
