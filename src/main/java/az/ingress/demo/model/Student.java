@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,10 +26,21 @@ public class Student {
 
     Integer age;
 
-    String phone;
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    List<Phone> phoneList;
 
-    Double balance;
 
-//    String address;
+//    @JoinTable(
+//            name = "new_table_name",
+//            joinColumns = @JoinColumn(name = "student"),
+//            inverseJoinColumns = @JoinColumn(name = "role")
+//    )
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "user_authorities",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "id")}
+    )
+    List<Role> roles;
 
 }

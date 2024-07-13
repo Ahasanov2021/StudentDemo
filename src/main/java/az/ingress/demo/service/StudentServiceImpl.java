@@ -57,12 +57,12 @@ public class StudentServiceImpl implements StudentService {
         if(student.getLastname() != null){
             entity.setLastname(student.getLastname());
         }
-        if(student.getPhone() != null){
-            entity.setPhone(student.getPhone());
-        }
-        if(student.getBalance() != null){
-            entity.setBalance(student.getBalance());
-        }
+//        if(student.getPhone() != null){
+//            entity.setPhone(student.getPhone());
+//        }
+//        if(student.getBalance() != null){
+//            entity.setBalance(student.getBalance());
+//        }
         studentRepository.save(entity);
         return entity;
     }

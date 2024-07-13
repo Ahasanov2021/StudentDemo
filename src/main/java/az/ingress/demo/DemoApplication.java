@@ -1,9 +1,16 @@
 package az.ingress.demo;
 
 
+import az.ingress.demo.model.Phone;
+import az.ingress.demo.model.Role;
 import az.ingress.demo.model.Student;
+import az.ingress.demo.repository.BalanceRepository;
+import az.ingress.demo.repository.PhoneRepository;
+import az.ingress.demo.repository.RoleRepository;
+import az.ingress.demo.repository.StudentRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,12 +23,19 @@ import java.util.List;
 
 @SpringBootApplication
 @RequiredArgsConstructor
+@Transactional
 public class DemoApplication implements CommandLineRunner {
+
 
 	private final EntityManagerFactory emf;
 
 	@Value("${spring.profiles.active}")
 	private String profile;
+
+	private final StudentRepository studentRepository;
+	private final PhoneRepository phoneRepository;
+	private final BalanceRepository balanceRepository;
+	private final RoleRepository roleRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
@@ -63,14 +77,80 @@ public class DemoApplication implements CommandLineRunner {
 //		entityManager.close();
 
 		// ========== Session class in Hibernate ========================
-		Session session = emf.unwrap(Session.class);
+//		Session session = emf.unwrap(Session.class);
+//
+//		session.beginTransaction();
+//		session.createNativeQuery("insert into student (name, lastname, age, phone, balance) values ('Namiq','Mammadov', 13, '5656569989', 0)")
+//				.executeUpdate();
+//		session.getTransaction().commit();
+//		session.close();
 
-		session.beginTransaction();
-		session.createNativeQuery("insert into student (name, lastname, age, phone, balance) values ('Namiq','Mammadov', 13, '5656569989', 0)")
-				.executeUpdate();
-		session.getTransaction().commit();
-		session.close();
+//		Phone phone1 = Phone.builder()
+//				.number("9942455454454")
+//				.build();
+//
+//		Phone phone2 = Phone.builder()
+//				.number("9948454986683")
+//				.build();
+//
+//		Phone phone3 = Phone.builder()
+//				.number("99445487979975")
+//				.build();
+//
+//		Student student = Student.builder()
+//				.name("Ali")
+//				.age(15)
+//				.lastname("Hasanov")
+//				.build();
+//
+//		phone1.setStudent(student);
+//		phone2.setStudent(student);
+//		phone3.setStudent(student);
+//
+//		phoneRepository.saveAll(List.of(phone1, phone2, phone3));
+//		studentRepository.save(student);
 
+
+//		Student student = studentRepository.findById(2).get();
+//		Phone build = Phone.builder()
+//				.number("4648497987987")
+//				.student(student)
+//				.build();
+//
+//		student.getPhoneList().add(build);
+//
+//		studentRepository.save(student);
+
+//		Role user = Role.builder()
+//				.role("user")
+//				.build();
+//
+//		Role admin = Role.builder()
+//				.role("admin")
+//				.build();
+//
+//		roleRepository.save(user);
+//		roleRepository.save(admin);
+
+//		Role user = roleRepository.findByRole("user").get();
+////		Role admin = roleRepository.findByRole("admin").get();
+////
+//		Student student = Student.builder()
+//				.name("Hasan")
+//				.age(25)
+//				.lastname("Hasanov")
+//				.roles(List.of(user))
+//				.build();
+//		studentRepository.save(student);
+
+//		studentRepository.deleteById(1);
+
+
+//		System.out.println(student);
+
+//		Phone phone = phoneRepository.findById(1).get();
+//		System.out.println(phone);
+//		System.out.println(phone.getStudent());
 
 
 
