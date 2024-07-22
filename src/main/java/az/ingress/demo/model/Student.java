@@ -26,6 +26,10 @@ public class Student {
 
     Integer age;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "balance_id")
+    Balance balance;
+
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     List<Phone> phoneList;
 

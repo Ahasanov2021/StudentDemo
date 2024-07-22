@@ -1,0 +1,55 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20240721-01
+      author: AHasanov
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: id
+                  type: INT
+                  autoIncrement: true
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: lastname
+                  type: VARCHAR(255)
+              - column:
+                  name: age
+                  type: INT
+              - column:
+                  name: balance_id
+                  type: INT
+            tableName: student
+  - changeSet:
+      id: 20240721-02
+      author: AHasanov
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: id
+                  type: INT
+                  autoIncrement: true
+              - column:
+                  name: amount
+                  type: DOUBLE
+            tableName: balance
+  - changeSet:
+      id: 20240721-03
+      author: AHasanov
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: balance_id
+            baseTableName: student
+            constraintName: fk_balance
+            referencedColumnNames: id
+            referencedTableName: balance
+

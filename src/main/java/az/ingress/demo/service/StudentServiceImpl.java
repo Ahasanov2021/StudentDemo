@@ -37,10 +37,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student create(Student student){
+    public StudentDto create(StudentDto studentDto){
         log.info("Student service create method is working.");
-        Student studentInDb = studentRepository.save(student);
-        return studentInDb;
+        Student student = studentMapper.dtoToEntity(studentDto);
+        studentRepository.save(student);
+        return studentMapper.entityToDto(student);
     }
 
     @Override

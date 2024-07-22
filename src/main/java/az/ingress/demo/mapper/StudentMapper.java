@@ -12,10 +12,12 @@ import static org.mapstruct.ReportingPolicy.IGNORE;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = IGNORE)
 public interface StudentMapper {
 
-    @Mapping(target = "surname", source = "lastname")
-//    @Mapping(target = "id", ignore = true)
+//    @Mapping(target = "surname", source = "lastname")
+    @Mapping(target = "id", ignore = true)
 //    @Mapping(target = "address.name", source = "address")
     StudentDto entityToDto(Student student);
+
+    Student dtoToEntity(StudentDto student);
 
 //    List<StudentDto> listEntityToDto(List<Student> student);
 }

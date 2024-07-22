@@ -6,7 +6,7 @@ import az.ingress.demo.model.Student;
 public interface StudentService {
     StudentDto get(Integer id);
 
-    Student create(Student student);
+    StudentDto create(StudentDto student);
 
     Student update(Integer id, Student student);
 

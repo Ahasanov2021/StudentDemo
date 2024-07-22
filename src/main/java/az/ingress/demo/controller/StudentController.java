@@ -30,7 +30,7 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student create(@RequestBody Student student){
+    public StudentDto create(@RequestBody StudentDto student){
         return studentService.create(student);
     }
 

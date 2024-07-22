@@ -1,6 +1,5 @@
-package az.ingress.demo.model;
+package az.ingress.demo.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,12 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-public class Balance {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class PhoneDto {
     Integer id;
 
-    Double amount;
-
+    String number;
 }
