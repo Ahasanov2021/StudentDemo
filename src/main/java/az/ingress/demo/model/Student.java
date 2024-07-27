@@ -13,6 +13,11 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity//(name = "students")
+//@NamedQueries({
+//        @NamedQuery(name = "Student_AGE_EQUALS", query = "from Student where age = :age"),
+//        @NamedQuery(name = "Student_AGE_GREATER_THAN", query = "from Student where age > :age")
+//})
+//@NamedEntityGraph(name = "students_with_phone_list", attributeNodes = @NamedAttributeNode("phoneList"))
 public class Student {
 
     @Id
@@ -26,25 +31,33 @@ public class Student {
 
     Integer age;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "balance_id")
     Balance balance;
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<Phone> phoneList;
 
 
+//    @ManyToMany(cascade = CascadeType.ALL)
 //    @JoinTable(
-//            name = "new_table_name",
-//            joinColumns = @JoinColumn(name = "student"),
-//            inverseJoinColumns = @JoinColumn(name = "role")
+//            name = "user_authorities",
+//            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+//            inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "id")}
 //    )
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "user_authorities",
-            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "id")}
-    )
-    List<Role> roles;
+//    List<Role> roles;
+
+
+    @Override
+    public String toString(){
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", age=" + age +
+                ", phoneList=" + phoneList +
+                '}';
+
+    }
 
 }

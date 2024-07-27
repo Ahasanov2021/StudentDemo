@@ -2,6 +2,7 @@ package az.ingress.demo.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.apache.commons.lang3.builder.HashCodeExclude;
 
 @Data
 @NoArgsConstructor
@@ -19,6 +20,7 @@ public class Phone {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "student_id")
     @ToString.Exclude
+//    @HashCodeExclude
     Student student;
 
 

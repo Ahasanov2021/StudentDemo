@@ -1,24 +1,19 @@
 package az.ingress.demo;
 
 
-import az.ingress.demo.model.Phone;
-import az.ingress.demo.model.Role;
 import az.ingress.demo.model.Student;
 import az.ingress.demo.repository.BalanceRepository;
 import az.ingress.demo.repository.PhoneRepository;
 import az.ingress.demo.repository.RoleRepository;
 import az.ingress.demo.repository.StudentRepository;
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.sql.*;
 import java.util.List;
 
 @SpringBootApplication
@@ -36,13 +31,34 @@ public class DemoApplication implements CommandLineRunner {
 	private final PhoneRepository phoneRepository;
 	private final BalanceRepository balanceRepository;
 	private final RoleRepository roleRepository;
+	private final EntityManagerFactory entityManagerFactory;
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
 	@Override
+	@Transactional
 	public void run(String... args) throws Exception {
+
+		List<Student> all = studentRepository.findAllBy();
+
+		all.forEach(student -> System.out.println(student));
+
+		studentRepository.findById(5).ifPresent(student -> System.out.println(student.getAge()));
+
+//		studentRepository.findAll();
+
+
+//		EntityManager entityManager = entityManagerFactory.createEntityManager();
+//		entityManager.createNamedQuery("Student_AGE_EQUALS", Student.class).getResultList();
+
+//		var studentGroupByDto = studentRepository.groupByAgeJpql();
+//		studentGroupByDto.forEach(dto -> {
+//			System.out.println("Age " + dto.getAge());
+//			System.out.println("Count " + dto.getCount());
+//
+//		});
 
 //		============================JDBC=========================================================
 //		Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5888/postgres", "postgres", "mysecretpassword");
