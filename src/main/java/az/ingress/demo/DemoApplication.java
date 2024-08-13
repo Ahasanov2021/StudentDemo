@@ -1,11 +1,10 @@
 package az.ingress.demo;
 
 
+import az.ingress.demo.model.Account;
 import az.ingress.demo.model.Student;
-import az.ingress.demo.repository.BalanceRepository;
-import az.ingress.demo.repository.PhoneRepository;
-import az.ingress.demo.repository.RoleRepository;
-import az.ingress.demo.repository.StudentRepository;
+import az.ingress.demo.repository.*;
+import az.ingress.demo.service.TransferService;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,34 +17,26 @@ import java.util.List;
 
 @SpringBootApplication
 @RequiredArgsConstructor
-@Transactional
 public class DemoApplication implements CommandLineRunner {
 
-
-	private final EntityManagerFactory emf;
-
-	@Value("${spring.profiles.active}")
-	private String profile;
-
-	private final StudentRepository studentRepository;
-	private final PhoneRepository phoneRepository;
-	private final BalanceRepository balanceRepository;
-	private final RoleRepository roleRepository;
-	private final EntityManagerFactory entityManagerFactory;
+	private final AccountRepository accountRepository;
+	private final TransferService transferService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
 	@Override
-	@Transactional
 	public void run(String... args) throws Exception {
+		Account from = accountRepository.findById(1).get();
+		Account to = accountRepository.findById(2).get();
+		transferService.transfer(from, to, 30.0);
 
-		List<Student> all = studentRepository.findAllBy();
+//		List<Student> all = studentRepository.findAllBy();
 
-		all.forEach(student -> System.out.println(student));
-
-		studentRepository.findById(5).ifPresent(student -> System.out.println(student.getAge()));
+//		all.forEach(student -> System.out.println(student));
+//
+//		studentRepository.findById(5).ifPresent(student -> System.out.println(student.getAge()));
 
 //		studentRepository.findAll();
 
