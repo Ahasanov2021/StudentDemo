@@ -7,7 +7,9 @@ import jakarta.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -17,6 +19,8 @@ public class TransferService {
 
     private final AccountRepository accountRepository;
     private final EntityManagerFactory entityManagerFactory;
+    private final ApplicationContext context;
+    // All spring beans are stored in Application context
 
     @SneakyThrows
     public void transfer(Account from, Account to, double amount){
@@ -53,9 +57,9 @@ public class TransferService {
     // @Transactional only locks runtime exceptions
     // rollbackOn helps to lock noted exception type
     // dontRollbackOn makes Transactional not to rollback noted exception type
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     // Transactional uses proxy design pattern
-    public void transfer2(Account from, Account to, double amount) throws Exception {
+    public void transfer2(Account from, Account to, double amount, EntityManager entityManager) {
 
         if(from.getBalance() < amount) {
             throw new RuntimeException();
@@ -64,12 +68,47 @@ public class TransferService {
         from.setBalance(from.getBalance() - amount);
         to.setBalance(to.getBalance() + amount);
 
-        accountRepository.save(from);
+        entityManager.merge(from);
         if (true) {
-            throw new Exception();
+            throw new RuntimeException();
         }
-        accountRepository.save(to);
+        entityManager.merge(to);
     }
 
-//    public void
+    @Transactional
+    // methods with @Transactinal should be called outside the class it's been declared
+    public void hello() {
+
+    }
+
+    // How @Transactional works
+    public void proxyTransfer(Account from, Account to, double amount) {
+        // This way a method annotated with @Transactional can be called inside the same class it was declared
+        context.getBean(TransferService.class).hello();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        try {
+            transfer2(from, to, amount, entityManager);
+            entityManager.getTransaction().commit();
+        } catch (NullPointerException e) {
+            entityManager.getTransaction().commit();
+        }  catch (RuntimeException e) {
+            entityManager.getTransaction().rollback();
+        } catch (Exception e) {
+            entityManager.getTransaction().commit();
+        } finally {
+            entityManager.close();
+        }
+
+    }
+
+
+    // Transactional isolation phenomenas
+    // 1.Dirty read - can see uncommitted all data
+    // 2.nonrepeatable read - can see uncommitted updates or deletes
+    // 3.phantom - can see uncommitted inserts or updates
+
+    
+
+
 }
