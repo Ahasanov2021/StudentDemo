@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface StudentRepository extends JpaRepository<Student, Integer> {
 
@@ -53,6 +54,11 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
 //    @Query(value = "update student set age = :age where lastname = :lastname", nativeQuery = true)
 //    @Modifying
 //    int updateByAge(Integer age, String lastname);
+
+
+    @Override
+    @EntityGraph(attributePaths = "phoneList")
+    Optional<Student> findById(Integer id);
 
 
 }

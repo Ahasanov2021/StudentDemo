@@ -2,35 +2,77 @@ package az.ingress.demo;
 
 
 import az.ingress.demo.model.Account;
+import az.ingress.demo.model.Phone;
 import az.ingress.demo.model.Student;
 import az.ingress.demo.repository.*;
 import az.ingress.demo.service.TransferService;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootApplication
 @RequiredArgsConstructor
+@Slf4j
 public class DemoApplication implements CommandLineRunner {
 
 	private final AccountRepository accountRepository;
 	private final TransferService transferService;
+	private final EntityManagerFactory emf;
+	private final Map<Integer, Account> map = new HashMap<>();
+	private final StudentRepository studentRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
 	@Override
-	public void run(String... args) throws Exception {
-		Account from = accountRepository.findById(1).get();
-		Account to = accountRepository.findById(2).get();
-		transferService.transfer(from, to, 30.0);
+	@Transactional
+	//@Transactional caches account when we search using findById referring to Primary Key
+	public void run(String... args) throws Exception { // begin transaction
+
+
+
+//		Account account = accountRepository.findByName("Ahmad").orElseThrow(RuntimeException::new);
+//		log.info("account {}", account);
+////		account.setName("Vugar");
+//		accountRepository.save(account);
+//		Account  account2 = accountRepository.findByName("Ahmad").orElseThrow(RuntimeException::new);
+//		log.info("account {}", account);
+//		log.info("method end");
+
+//		Account account = getAccount(1);
+//		//
+//		//
+//		Account account2 = getAccount(1);
+
+		// Entity lifecycle modes
+//		EntityManager em = emf.createEntityManager(); // persistence context - EM keeps all the entities in here
+//		em.getTransaction().begin();
+//
+//		Account account = new Account();
+//		account.setBalance(100.0);
+//		account.setName("Miraga");
+//		em.persist(account);
+//		em.remove(account);
+//		em.getTransaction().commit();
+//		em.close();
+//		// em.flush
+//		// commit
+
+
+//		Account from = accountRepository.findById(1).get();
+//		Account to = accountRepository.findById(2).get();
+//		transferService.transfer(from, to, 30.0);
 
 //		List<Student> all = studentRepository.findAllBy();
 
@@ -159,7 +201,66 @@ public class DemoApplication implements CommandLineRunner {
 //		System.out.println(phone);
 //		System.out.println(phone.getStudent());
 
+//		Student student = new Student();
+//		student.setName("Miraga");
+//		student.setLastname("Mammadov");
+//		student.setAge(29);
+//
+//		Phone phone = new Phone();
+//		phone.setNumber("994558986598");
+//		phone.setStudent(student);
+//
+//		Phone phone2 = new Phone();
+//		phone2.setNumber("994778986598");
+//		phone2.setStudent(student);
+//
+//		Phone phone3 = new Phone();
+//		phone3.setNumber("994508986598");
+//		phone3.setStudent(student);
+//
+//		student.setPhoneList(List.of(phone, phone2, phone3));
+//
+//		studentRepository.save(student);
+//
+//		////////////////////////////////////////
+//		Student student2 = new Student();
+//		student2.setName("Elsad");
+//		student2.setLastname("Huseynov");
+//		student2.setAge(32);
+//
+//		Phone phone4 = new Phone();
+//		phone4.setNumber("994557826598");
+//		phone4.setStudent(student2);
+//
+//		Phone phone5 = new Phone();
+//		phone5.setNumber("994777836598");
+//		phone5.setStudent(student2);
+//
+//		Phone phone6 = new Phone();
+//		phone6.setNumber("994507846598");
+//		phone6.setStudent(student2);
+//
+//		student2.setPhoneList(List.of(phone4, phone5, phone6));
+//
+//		studentRepository.save(student2);
 
+//		Student student = studentRepository.findById(1).orElseThrow(RuntimeException::new);
+//		log.info("Student is {}", student);
+//		Student student2 = studentRepository.findById(1).orElseThrow(RuntimeException::new);
+//		log.info("Student is {}", student2);
 
+		List<Student> all = studentRepository.findAll();
+		studentRepository.findById(1).orElseThrow(RuntimeException::new);
+	}
+
+	public Account getAccount(Integer id) {
+		Account account = map.get(id);
+		if (account == null) {
+			account = accountRepository.findById(1).orElseThrow(RuntimeException::new);
+			map.put(account.getId(), account);
+			return account;
+		} else {
+			return account;
+		}
 	}
 }

@@ -30,12 +30,12 @@ public class Student {
     String lastname;
 
     Integer age;
+//
+//    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "balance_id")
+//    Balance balance;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "balance_id")
-    Balance balance;
-
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     List<Phone> phoneList;
 
 
@@ -48,16 +48,16 @@ public class Student {
 //    List<Role> roles;
 
 
-    @Override
-    public String toString(){
-        return "Student{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", age=" + age +
-                ", phoneList=" + phoneList +
-                '}';
-
-    }
+//    @Override
+//    public String toString(){
+//        return "Student{" +
+//                "id=" + id +
+//                ", name='" + name + '\'' +
+//                ", lastname='" + lastname + '\'' +
+//                ", age=" + age +
+//                ", phoneList=" + phoneList +
+//                '}';
+//
+//    }
 
 }
